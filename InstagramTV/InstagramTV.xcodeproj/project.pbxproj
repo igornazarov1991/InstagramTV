@@ -14,6 +14,7 @@
 		6AA3845427628C6D003A7826 /* InstagramTVTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3845327628C6D003A7826 /* InstagramTVTests.swift */; };
 		6AA3845E27628C6D003A7826 /* InstagramTVUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3845D27628C6D003A7826 /* InstagramTVUITests.swift */; };
 		6AA3846027628C6D003A7826 /* InstagramTVUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3845F27628C6D003A7826 /* InstagramTVUITestsLaunchTests.swift */; };
+		6AA3846F27629838003A7826 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 6AA3846E27629838003A7826 /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AA3846F27629838003A7826 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +146,9 @@
 			dependencies = (
 			);
 			name = InstagramTV;
+			packageProductDependencies = (
+				6AA3846E27629838003A7826 /* ComposableArchitecture */,
+			);
 			productName = InstagramTV;
 			productReference = 6AA3843F27628C6B003A7826 /* InstagramTV.app */;
 			productType = "com.apple.product-type.application";
@@ -216,6 +221,9 @@
 				Base,
 			);
 			mainGroup = 6AA3843627628C6B003A7826;
+			packageReferences = (
+				6AA3846D27629838003A7826 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 6AA3844027628C6B003A7826 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -622,6 +630,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6AA3846D27629838003A7826 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.23.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6AA3846E27629838003A7826 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AA3846D27629838003A7826 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6AA3843727628C6B003A7826 /* Project object */;
 }
