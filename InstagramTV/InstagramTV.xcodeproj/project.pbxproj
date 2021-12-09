@@ -15,6 +15,8 @@
 		6AA3845E27628C6D003A7826 /* InstagramTVUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3845D27628C6D003A7826 /* InstagramTVUITests.swift */; };
 		6AA3846027628C6D003A7826 /* InstagramTVUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3845F27628C6D003A7826 /* InstagramTVUITestsLaunchTests.swift */; };
 		6AA3846F27629838003A7826 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 6AA3846E27629838003A7826 /* ComposableArchitecture */; };
+		6AA3847227629ABD003A7826 /* Swiftagram in Frameworks */ = {isa = PBXBuildFile; productRef = 6AA3847127629ABD003A7826 /* Swiftagram */; };
+		6AA3847427629ABD003A7826 /* SwiftagramCrypto in Frameworks */ = {isa = PBXBuildFile; productRef = 6AA3847327629ABD003A7826 /* SwiftagramCrypto */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6AA3846F27629838003A7826 /* ComposableArchitecture in Frameworks */,
+				6AA3847227629ABD003A7826 /* Swiftagram in Frameworks */,
+				6AA3847427629ABD003A7826 /* SwiftagramCrypto in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +152,8 @@
 			name = InstagramTV;
 			packageProductDependencies = (
 				6AA3846E27629838003A7826 /* ComposableArchitecture */,
+				6AA3847127629ABD003A7826 /* Swiftagram */,
+				6AA3847327629ABD003A7826 /* SwiftagramCrypto */,
 			);
 			productName = InstagramTV;
 			productReference = 6AA3843F27628C6B003A7826 /* InstagramTV.app */;
@@ -223,6 +229,7 @@
 			mainGroup = 6AA3843627628C6B003A7826;
 			packageReferences = (
 				6AA3846D27629838003A7826 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				6AA3847027629ABD003A7826 /* XCRemoteSwiftPackageReference "Swiftagram" */,
 			);
 			productRefGroup = 6AA3844027628C6B003A7826 /* Products */;
 			projectDirPath = "";
@@ -640,6 +647,14 @@
 				minimumVersion = 0.23.0;
 			};
 		};
+		6AA3847027629ABD003A7826 /* XCRemoteSwiftPackageReference "Swiftagram" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sbertix/Swiftagram.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -647,6 +662,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6AA3846D27629838003A7826 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		6AA3847127629ABD003A7826 /* Swiftagram */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AA3847027629ABD003A7826 /* XCRemoteSwiftPackageReference "Swiftagram" */;
+			productName = Swiftagram;
+		};
+		6AA3847327629ABD003A7826 /* SwiftagramCrypto */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AA3847027629ABD003A7826 /* XCRemoteSwiftPackageReference "Swiftagram" */;
+			productName = SwiftagramCrypto;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
