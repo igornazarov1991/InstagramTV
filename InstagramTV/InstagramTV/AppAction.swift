@@ -8,8 +8,5 @@
 import Foundation
 
 enum AppAction: Equatable {
-    case loginButtonTapped
-    case authenticationResponse(Result<String, AuthenticationClient.Error>)
+    case authentication(AuthenticationAction)
 }
-
-struct ApiError: Error, Equatable {}

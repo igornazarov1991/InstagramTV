@@ -18,17 +18,3 @@ struct AppEnvironment {
         authenticator: .live
     )
 }
-
-struct AuthenticationClient {
-    var authenticate: (String, String) -> Effect<String, Error>
-
-    struct Error: Swift.Error, Equatable {}
-}
-
-extension AuthenticationClient {
-    static let live = Self(
-        authenticate: { username, password in
-            return Effect(value: "\(username)+\(password)")
-        }
-    )
-}

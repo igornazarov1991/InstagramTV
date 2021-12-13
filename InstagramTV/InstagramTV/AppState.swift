@@ -8,13 +8,9 @@
 import Foundation
 
 struct AppState: Equatable {
-    var username = ""
-    var password = ""
-    var secret = ""
+    var authentication: AuthenticationState
 
     static let initial = Self(
-        username: "igor.nazarov.1991",
-        password: "password",
-        secret: ""
+        authentication: .initial
     )
 }

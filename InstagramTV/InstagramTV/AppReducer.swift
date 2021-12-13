@@ -7,20 +7,19 @@
 
 import Foundation
 import ComposableArchitecture
-import Swiftagram
 
-let appReducer = Reducer<AppState, AppAction, AppEnvironment> { state, action, environment in
-    switch action {
-    case .loginButtonTapped:
-        return environment.authenticator.authenticate(state.username, state.password)
-            .receive(on: environment.mainQueue)
-            .catchToEffect(AppAction.authenticationResponse)
+let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
+    .init { _, action, _ in
+        switch action {
+        default:
+            return .none
+        }
+    },
 
-    case .authenticationResponse(.success(let secret)):
-        state.secret = secret
-        return .none
-
-    case .authenticationResponse(.failure(let error)):
-        return .none
-    }
-}
+    authenticationReducer
+        .pullback(
+            state: \.authentication,
+            action: /AppAction.authentication,
+            environment: { .init(mainQueue: $0.mainQueue, authenticator: $0.authenticator) }
+        )
+)
