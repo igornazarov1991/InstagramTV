@@ -17,6 +17,10 @@
 		6AA3846F27629838003A7826 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 6AA3846E27629838003A7826 /* ComposableArchitecture */; };
 		6AA3847227629ABD003A7826 /* Swiftagram in Frameworks */ = {isa = PBXBuildFile; productRef = 6AA3847127629ABD003A7826 /* Swiftagram */; };
 		6AA3847427629ABD003A7826 /* SwiftagramCrypto in Frameworks */ = {isa = PBXBuildFile; productRef = 6AA3847327629ABD003A7826 /* SwiftagramCrypto */; };
+		6AA3847627629CD8003A7826 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3847527629CD8003A7826 /* AppState.swift */; };
+		6AA3847827629D25003A7826 /* AppAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3847727629D25003A7826 /* AppAction.swift */; };
+		6AA3847A27629E36003A7826 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3847927629E36003A7826 /* AppEnvironment.swift */; };
+		6AA3847C2762AF90003A7826 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3847B2762AF90003A7826 /* AppReducer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +51,10 @@
 		6AA3845927628C6D003A7826 /* InstagramTVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstagramTVUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AA3845D27628C6D003A7826 /* InstagramTVUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramTVUITests.swift; sourceTree = "<group>"; };
 		6AA3845F27628C6D003A7826 /* InstagramTVUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramTVUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6AA3847527629CD8003A7826 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		6AA3847727629D25003A7826 /* AppAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAction.swift; sourceTree = "<group>"; };
+		6AA3847927629E36003A7826 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		6AA3847B2762AF90003A7826 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +108,10 @@
 		6AA3844127628C6B003A7826 /* InstagramTV */ = {
 			isa = PBXGroup;
 			children = (
+				6AA3847527629CD8003A7826 /* AppState.swift */,
+				6AA3847727629D25003A7826 /* AppAction.swift */,
+				6AA3847927629E36003A7826 /* AppEnvironment.swift */,
+				6AA3847B2762AF90003A7826 /* AppReducer.swift */,
 				6AA3844227628C6B003A7826 /* InstagramTVApp.swift */,
 				6AA3844427628C6B003A7826 /* ContentView.swift */,
 				6AA3844627628C6D003A7826 /* Assets.xcassets */,
@@ -293,6 +305,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AA3847C2762AF90003A7826 /* AppReducer.swift in Sources */,
+				6AA3847A27629E36003A7826 /* AppEnvironment.swift in Sources */,
+				6AA3847627629CD8003A7826 /* AppState.swift in Sources */,
+				6AA3847827629D25003A7826 /* AppAction.swift in Sources */,
 				6AA3844527628C6B003A7826 /* ContentView.swift in Sources */,
 				6AA3844327628C6B003A7826 /* InstagramTVApp.swift in Sources */,
 			);

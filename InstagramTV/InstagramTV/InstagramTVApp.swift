@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct InstagramTVApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let store = Store(
+                initialState: .initial,
+                reducer: appReducer,
+                environment: .live
+            )
+            ContentView(store: store)
         }
     }
 }
