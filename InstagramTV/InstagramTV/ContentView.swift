@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             VStack {
-                Text("\(viewStore.authentication.secret)")
+                Text("\(viewStore.authentication.loginInfo)")
                 Button("login") { viewStore.send(.authentication(.loginButtonTapped)) }
             }
         }

@@ -11,14 +11,16 @@ import ComposableArchitecture
 import SwiftagramCrypto
 
 struct AuthenticationState: Equatable {
-    var username = ""
-    var password = ""
-    var secret = ""
+    var username: String
+    var password: String
+    var isLoggedIn: Bool
+    var loginInfo: String
 
     static let initial = Self(
         username: "igor.nazarov.1991",
         password: "password",
-        secret: ""
+        isLoggedIn: false,
+        loginInfo: ""
     )
 }
 
@@ -43,26 +45,60 @@ let authenticationReducer = Reducer<AuthenticationState, AuthenticationAction, A
             .receive(on: environment.mainQueue)
             .catchToEffect(AuthenticationAction.authenticationResponse)
 
-    case .authenticationResponse(.success(let secret)):
-        state.secret = secret
+    case .authenticationResponse(.success(let result)):
+        state.isLoggedIn = true
+        state.loginInfo = result
         return .none
 
     case .authenticationResponse(.failure(let error)):
+        state.isLoggedIn = false
+        state.loginInfo = "\(error)"
         return .none
     }
 }
 
 struct AuthenticationClient {
     var authenticate: (String, String) -> Effect<String, Error>
-    private var bin: Set<AnyCancellable> = []
 
-    struct Error: Swift.Error, Equatable {}
+    enum Error: Swift.Error, Equatable {
+        case generic
+    }
 }
+
+private var bin: Set<AnyCancellable> = []
 
 extension AuthenticationClient {
     static let live = Self(
         authenticate: { username, password in
-            return Effect(value: "\(username)+\(password)")
+            Effect<String, Error>.future { callback in
+                Authenticator.keychain
+                    .basic(username: username,
+                           password: password)
+                    .authenticate()
+                    .sink(receiveCompletion: {
+                        switch $0 {
+                        case .failure(let error):
+                            // Deal with two factor authentication.
+                            switch error {
+                            case Authenticator.Error.twoFactorChallenge(let challenge):
+                                // Once you receive the challenge,
+                                // ask the user for the 2FA code
+                                // then just call:
+                                // `challenge.code(/* the code */).authenticate()`
+                                // and deal with the publisher.
+                                callback(.failure(.generic))
+                            default:
+                                callback(.failure(.generic))
+                            }
+                        default:
+                            break
+                        }
+                    },
+                          receiveValue: { secret in
+                        callback(.success("Logged in as \(username)"))
+                    })
+                    .store(in: &bin)
+            }
         }
     )
 }

@@ -20,6 +20,9 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
         .pullback(
             state: \.authentication,
             action: /AppAction.authentication,
-            environment: { .init(mainQueue: $0.mainQueue, authenticator: $0.authenticator) }
+            environment: { .init(
+                mainQueue: $0.mainQueue,
+                authenticator: $0.authenticator
+            ) }
         )
 )
