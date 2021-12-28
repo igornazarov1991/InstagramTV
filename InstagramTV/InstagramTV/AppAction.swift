@@ -8,5 +8,6 @@
 import Foundation
 
 enum AppAction: Equatable {
+    case setLoginSheet(presented: Bool)
     case authentication(AuthenticationAction)
 }
