@@ -13,11 +13,11 @@ struct InstagramTVApp: App {
     var body: some Scene {
         WindowGroup {
             let store = Store(
-                initialState: .initial,
+                initialState: AppState(),
                 reducer: appReducer,
                 environment: .live
             )
-            InitializationView(store: store)
+            AppView(store: store)
         }
     }
 }
