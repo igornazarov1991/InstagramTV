@@ -11,19 +11,24 @@ import ComposableArchitecture
 import SwiftagramCrypto
 import Swiftagram
 
+typealias TwoFactor = Authenticator.Error.TwoFactor
+
 struct AuthenticationState: Equatable {
     var username: String
     var password: String
     var isLoggedIn: Bool
     var isLoginPresented: Bool
     var loginInfo: String
+    var twoFactorNeeded: Bool
+    var twoFactorChallenge: TwoFactor?
 
     static let initial = Self(
-        username: "igor.nazarov.1991",
-        password: "password",
+        username: "johanakropol",
+        password: "MiVidaLoca2020",
         isLoggedIn: false,
         isLoginPresented: false,
-        loginInfo: ""
+        loginInfo: "",
+        twoFactorNeeded: false
     )
 }
 
@@ -33,6 +38,8 @@ enum AuthenticationAction: Equatable {
     case secretTokenResponse(Result<String, AuthenticationClient.Error>)
     case loginButtonTapped
     case authenticationResponse(Result<String, AuthenticationClient.Error>)
+    case sendTwoFactor(code: String)
+    case twoFactorResponse(Result<String, AuthenticationClient.Error>)
 }
 
 struct AuthenticationEnvironment {
@@ -77,9 +84,29 @@ let authenticationReducer = Reducer<AuthenticationState, AuthenticationAction, A
         state.loginInfo = result
         return .none
 
+    case .authenticationResponse(.failure(.twoFactorChallenge(let challenge))):
+        state.isLoggedIn = false
+        state.loginInfo = "2FA is required"
+        state.twoFactorNeeded = true
+        state.twoFactorChallenge = challenge
+        return .none
+
     case .authenticationResponse(.failure(let error)):
         state.isLoggedIn = false
         state.loginInfo = "\(error)"
+        return .none
+
+    case .sendTwoFactor(code: let code):
+        return environment.authenticator.sendTwoFactor(state.twoFactorChallenge, code)
+            .receive(on: environment.mainQueue)
+            .catchToEffect(AuthenticationAction.twoFactorResponse)
+
+    case .twoFactorResponse(.success(let result)):
+        print(result)
+        return .none
+
+    case .twoFactorResponse(.failure(let error)):
+        print(error)
         return .none
     }
 }
@@ -87,10 +114,12 @@ let authenticationReducer = Reducer<AuthenticationState, AuthenticationAction, A
 struct AuthenticationClient {
     var authenticate: (String, String) -> Effect<String, Error>
     var fetchSecret: () -> Effect<String, Error>
+    var sendTwoFactor: (TwoFactor?, String) -> Effect<String, Error>
 
     enum Error: Swift.Error, Equatable {
         case generic
         case emptyToken
+        case twoFactorChallenge(TwoFactor)
     }
 }
 
@@ -117,7 +146,7 @@ extension AuthenticationClient {
                                 // then just call:
                                 // `challenge.code(/* the code */).authenticate()`
                                 // and deal with the publisher.
-                                callback(.failure(.generic))
+                                callback(.failure(.twoFactorChallenge(challenge)))
                             default:
                                 callback(.failure(.generic))
                             }
@@ -140,6 +169,26 @@ extension AuthenticationClient {
                     callback(.failure(.emptyToken))
                 }
             }
+        },
+        sendTwoFactor: { challenge, code in
+            Effect<String, Error>.future { callback in
+                challenge?
+                    .code(code)
+                    .authenticate()
+                    .sink(receiveCompletion: {
+                        print($0)
+                    },
+                          receiveValue: { result in
+                        print(result)
+                    })
+                    .store(in: &bin)
+            }
         }
     )
+}
+
+extension TwoFactor: Equatable {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.identifier == rhs.identifier
+    }
 }

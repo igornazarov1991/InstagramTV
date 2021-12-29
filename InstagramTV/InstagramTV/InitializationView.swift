@@ -20,7 +20,7 @@ struct InitializationView: View {
                                         send: .authentication(.setLoginSheet(presented: true))
                                     )
                 ) {
-                    LoginView()
+                    LoginView(store: store)
                 }
                 .onAppear {
                     viewStore.send(.authentication(.fetchSecretToken))

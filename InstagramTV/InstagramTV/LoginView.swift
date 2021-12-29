@@ -6,15 +6,38 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct LoginView: View {
+    let store: Store<AppState, AppAction>
+
+    @State var twoFactorCode = ""
+    
     var body: some View {
-        Button("Login") { print("Logging in...") }
+        WithViewStore(store) { viewStore in
+            VStack {
+                Text("\(viewStore.authentication.loginInfo)")
+                Button("Login") { viewStore.send(.authentication(.loginButtonTapped)) }
+                if viewStore.authentication.twoFactorNeeded {
+                    TextField(
+                        "Enter code...",
+                        text: $twoFactorCode
+                    )
+                        .foregroundColor(.red)
+                    Button("Send code") { viewStore.send(.authentication(.sendTwoFactor(code: twoFactorCode))) }
+                }
+            }
+        }
     }
 }
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        let store = Store(
+            initialState: .initial,
+            reducer: appReducer,
+            environment: .live
+        )
+        LoginView(store: store)
     }
 }
