@@ -97,6 +97,7 @@ struct AuthenticationClient {
         case generic
         case emptyToken
         case twoFactorChallenge(TwoFactor)
+        case twoFactorFailed
     }
 }
 
@@ -156,11 +157,11 @@ extension AuthenticationClient {
                     .code(code)
                     .authenticate()
                     .sink(
-                        receiveCompletion: {
-                            print($0)
+                        receiveCompletion: { _ in
+                            callback(.failure(.twoFactorFailed))
                         },
-                        receiveValue: { result in
-                            print(result)
+                        receiveValue: { secret in
+                            callback(.success(secret))
                         }
                     )
                     .store(in: &bin)

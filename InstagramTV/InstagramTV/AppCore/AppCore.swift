@@ -54,6 +54,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             state = .loggedIn(.init(secret: secret))
             return .none
 
+        case .login(.twoFactorResponse(.success(let secret))):
+            state = .loggedIn(.init(secret: secret))
+            return .none
+
         case .login:
             return .none
 

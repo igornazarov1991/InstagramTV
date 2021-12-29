@@ -59,6 +59,7 @@
 		6AB9A81C277CB26400986925 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		6AB9A81F277CB2B300986925 /* LoggedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInView.swift; sourceTree = "<group>"; };
 		6AB9A821277CB71C00986925 /* LoggedInCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInCore.swift; sourceTree = "<group>"; };
+		6AB9A823277D1D3600986925 /* Swiftagram */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Swiftagram; path = ../../forks/Swiftagram; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +102,7 @@
 		6AA3843627628C6B003A7826 = {
 			isa = PBXGroup;
 			children = (
+				6AB9A823277D1D3600986925 /* Swiftagram */,
 				6AA3844127628C6B003A7826 /* InstagramTV */,
 				6AA3845227628C6D003A7826 /* InstagramTVTests */,
 				6AA3845C27628C6D003A7826 /* InstagramTVUITests */,
