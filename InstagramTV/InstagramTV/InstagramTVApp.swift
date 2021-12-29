@@ -17,7 +17,6 @@ struct InstagramTVApp: App {
                 reducer: appReducer,
                 environment: .live
             )
-//            ContentView(store: store)
             InitializationView(store: store)
         }
     }

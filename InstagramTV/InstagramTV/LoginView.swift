@@ -12,21 +12,24 @@ struct LoginView: View {
     let store: Store<AppState, AppAction>
 
     @State var twoFactorCode = ""
-    
+
     var body: some View {
         WithViewStore(store) { viewStore in
-            VStack {
-                Text("\(viewStore.authentication.loginInfo)")
-                Button("Login") { viewStore.send(.authentication(.loginButtonTapped)) }
-                if viewStore.authentication.twoFactorNeeded {
-                    TextField(
-                        "Enter code...",
-                        text: $twoFactorCode
-                    )
-                        .foregroundColor(.red)
-                    Button("Send code") { viewStore.send(.authentication(.sendTwoFactor(code: twoFactorCode))) }
+            ZStack {
+                Color.white
+                VStack {
+                    Button("Login") { viewStore.send(.authentication(.loginButtonTapped)) }
+                    if viewStore.authentication.twoFactorNeeded {
+                        TextField(
+                            "Enter code...",
+                            text: $twoFactorCode
+                        )
+                            .foregroundColor(.red)
+                        Button("Send code") { viewStore.send(.authentication(.sendTwoFactor(code: twoFactorCode))) }
+                    }
                 }
             }
+
         }
     }
 }

@@ -11,14 +11,12 @@ import ComposableArchitecture
 import SwiftagramCrypto
 import Swiftagram
 
-typealias TwoFactor = Authenticator.Error.TwoFactor
-
 struct AuthenticationState: Equatable {
     var username: String
     var password: String
     var isLoggedIn: Bool
     var isLoginPresented: Bool
-    var loginInfo: String
+    var secret: Secret?
     var twoFactorNeeded: Bool
     var twoFactorChallenge: TwoFactor?
 
@@ -27,7 +25,6 @@ struct AuthenticationState: Equatable {
         password: "MiVidaLoca2020",
         isLoggedIn: false,
         isLoginPresented: false,
-        loginInfo: "",
         twoFactorNeeded: false
     )
 }
@@ -35,11 +32,11 @@ struct AuthenticationState: Equatable {
 enum AuthenticationAction: Equatable {
     case setLoginSheet(presented: Bool)
     case fetchSecretToken
-    case secretTokenResponse(Result<String, AuthenticationClient.Error>)
+    case secretTokenResponse(Result<Secret, AuthenticationClient.Error>)
     case loginButtonTapped
-    case authenticationResponse(Result<String, AuthenticationClient.Error>)
+    case authenticationResponse(Result<Secret, AuthenticationClient.Error>)
     case sendTwoFactor(code: String)
-    case twoFactorResponse(Result<String, AuthenticationClient.Error>)
+    case twoFactorResponse(Result<Secret, AuthenticationClient.Error>)
 }
 
 struct AuthenticationEnvironment {
@@ -47,7 +44,11 @@ struct AuthenticationEnvironment {
     var authenticator: AuthenticationClient
 }
 
-let authenticationReducer = Reducer<AuthenticationState, AuthenticationAction, AuthenticationEnvironment> { state, action, environment in
+let authenticationReducer = Reducer<
+    AuthenticationState,
+    AuthenticationAction,
+    AuthenticationEnvironment
+> { state, action, environment in
 
     switch action {
     case .setLoginSheet(presented: let presented):
@@ -59,16 +60,15 @@ let authenticationReducer = Reducer<AuthenticationState, AuthenticationAction, A
             .receive(on: environment.mainQueue)
             .catchToEffect(AuthenticationAction.secretTokenResponse)
 
-    case .secretTokenResponse(.success(let result)):
+    case .secretTokenResponse(.success(let secret)):
         state.isLoggedIn = true
         state.isLoginPresented = false
-        state.loginInfo = result
+        state.secret = secret
         return .none
 
     case .secretTokenResponse(.failure(let error)):
         state.isLoggedIn = false
         state.isLoginPresented = true
-        state.loginInfo = "\(error)"
         return .none
 
     case .loginButtonTapped:
@@ -79,21 +79,19 @@ let authenticationReducer = Reducer<AuthenticationState, AuthenticationAction, A
             .receive(on: environment.mainQueue)
             .catchToEffect(AuthenticationAction.authenticationResponse)
 
-    case .authenticationResponse(.success(let result)):
+    case .authenticationResponse(.success(let secret)):
         state.isLoggedIn = true
-        state.loginInfo = result
+        state.secret = secret
         return .none
 
     case .authenticationResponse(.failure(.twoFactorChallenge(let challenge))):
         state.isLoggedIn = false
-        state.loginInfo = "2FA is required"
         state.twoFactorNeeded = true
         state.twoFactorChallenge = challenge
         return .none
 
     case .authenticationResponse(.failure(let error)):
         state.isLoggedIn = false
-        state.loginInfo = "\(error)"
         return .none
 
     case .sendTwoFactor(code: let code):
@@ -112,9 +110,9 @@ let authenticationReducer = Reducer<AuthenticationState, AuthenticationAction, A
 }
 
 struct AuthenticationClient {
-    var authenticate: (String, String) -> Effect<String, Error>
-    var fetchSecret: () -> Effect<String, Error>
-    var sendTwoFactor: (TwoFactor?, String) -> Effect<String, Error>
+    var authenticate: (String, String) -> Effect<Secret, Error>
+    var fetchSecret: () -> Effect<Secret, Error>
+    var sendTwoFactor: (TwoFactor?, String) -> Effect<Secret, Error>
 
     enum Error: Swift.Error, Equatable {
         case generic
@@ -128,7 +126,7 @@ private var bin: Set<AnyCancellable> = []
 extension AuthenticationClient {
     static let live = Self(
         authenticate: { username, password in
-            Effect<String, Error>.future { callback in
+            Effect<Secret, Error>.future { callback in
                 Authenticator.keychain
                     .basic(
                         username: username,
@@ -155,23 +153,22 @@ extension AuthenticationClient {
                         }
                     },
                           receiveValue: { secret in
-                        callback(.success("Logged in as \(username)"))
+                        callback(.success(secret))
                     })
                     .store(in: &bin)
             }
         },
         fetchSecret: {
-            Effect<String, Error>.future { callback in
-                if let secret = try? Authenticator.keychain.secrets.get().first,
-                   let token = try? JSONEncoder().encode(secret).base64EncodedString() {
-                    callback(.success(token))
+            Effect<Secret, Error>.future { callback in
+                if let secret = try? Authenticator.keychain.secrets.get().first {
+                    callback(.success(secret))
                 } else {
                     callback(.failure(.emptyToken))
                 }
             }
         },
         sendTwoFactor: { challenge, code in
-            Effect<String, Error>.future { callback in
+            Effect<Secret, Error>.future { callback in
                 challenge?
                     .code(code)
                     .authenticate()
@@ -185,10 +182,4 @@ extension AuthenticationClient {
             }
         }
     )
-}
-
-extension TwoFactor: Equatable {
-    public static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs.identifier == rhs.identifier
-    }
 }
