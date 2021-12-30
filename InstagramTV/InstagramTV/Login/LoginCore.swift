@@ -93,6 +93,8 @@ struct AuthenticationClient {
     var fetchSecret: () -> Effect<Secret, Error>
     var sendTwoFactor: (TwoFactor?, String) -> Effect<Secret, Error>
 
+    static private var bin: Set<AnyCancellable> = []
+
     enum Error: Swift.Error, Equatable {
         case generic
         case emptyToken
@@ -100,8 +102,6 @@ struct AuthenticationClient {
         case twoFactorFailed
     }
 }
-
-private var bin: Set<AnyCancellable> = []
 
 extension AuthenticationClient {
     static let live = Self(

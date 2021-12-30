@@ -2,19 +2,35 @@
 //  LoggedInView.swift
 //  InstagramTV
 //
-//  Created by Igor Nazarov on 29.12.2021.
+//  Created by Igor Nazarov on 30.12.2021.
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct LoggedInView: View {
-    var body: some View {
-        Text("Logged in as...")
-    }
-}
+    let store: Store<LoggedInState, LoggedInAction>
 
-struct LoggedInView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoggedInView()
+    var body: some View {
+        WithViewStore(store) { viewStore in
+            TabView {
+                IfLetStore(
+                    store.scope(
+                        state: \.profile,
+                        action: LoggedInAction.profile
+                    ),
+                    then: ProfileView.init(store:)
+                )
+                    .tabItem {
+                        Text("Profile")
+                    }
+
+                Text("Followers")
+                    .tabItem { Text("Followers") }
+            }
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
+        }
     }
 }

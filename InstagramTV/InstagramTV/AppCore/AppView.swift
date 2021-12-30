@@ -24,7 +24,7 @@ struct AppView: View {
                     state: /AppState.loggedIn,
                     action: AppAction.loggedIn
                 ) { store in
-                    LoggedInView()
+                    LoggedInView(store: store)
                 }
             }
             .onAppear {

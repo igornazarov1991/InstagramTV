@@ -25,10 +25,12 @@ enum AppAction: Equatable {
 struct AppEnvironment {
     var mainQueue: AnySchedulerOf<DispatchQueue>
     var authenticationClient: AuthenticationClient
+    var userClient: UserClient
 
     static let live = Self(
         mainQueue: .main,
-        authenticationClient: .live
+        authenticationClient: .live,
+        userClient: .live
     )
 }
 
@@ -40,6 +42,17 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             LoginEnvironment(
                 mainQueue: $0.mainQueue,
                 authenticationClient: $0.authenticationClient
+            )
+        }
+    ),
+
+    loggedInReducer.pullback(
+        state: /AppState.loggedIn,
+        action: /AppAction.loggedIn,
+        environment: {
+            LoggedInEnvironment(
+                mainQueue: $0.mainQueue,
+                userClient: $0.userClient
             )
         }
     ),
