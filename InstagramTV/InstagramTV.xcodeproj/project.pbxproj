@@ -10,6 +10,8 @@
 		6A412FF5277DA0E6008FEEFB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A412FF4277DA0E6008FEEFB /* ProfileView.swift */; };
 		6A412FF7277DA0F6008FEEFB /* LoggedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A412FF6277DA0F6008FEEFB /* LoggedInView.swift */; };
 		6A412FF9277DA9C4008FEEFB /* ProfileCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A412FF8277DA9C4008FEEFB /* ProfileCore.swift */; };
+		6A5A8F6E27806DA8004908E7 /* AuthenticationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5A8F6D27806DA8004908E7 /* AuthenticationClient.swift */; };
+		6A5A8F7127806E0C004908E7 /* UserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5A8F7027806E0C004908E7 /* UserClient.swift */; };
 		6A73624C2767A1BB00486A86 /* LoginCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A73624B2767A1BB00486A86 /* LoginCore.swift */; };
 		6AA3844327628C6B003A7826 /* InstagramTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA3844227628C6B003A7826 /* InstagramTVApp.swift */; };
 		6AA3844727628C6D003A7826 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AA3844627628C6D003A7826 /* Assets.xcassets */; };
@@ -48,6 +50,8 @@
 		6A412FF4277DA0E6008FEEFB /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		6A412FF6277DA0F6008FEEFB /* LoggedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInView.swift; sourceTree = "<group>"; };
 		6A412FF8277DA9C4008FEEFB /* ProfileCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCore.swift; sourceTree = "<group>"; };
+		6A5A8F6D27806DA8004908E7 /* AuthenticationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationClient.swift; sourceTree = "<group>"; };
+		6A5A8F7027806E0C004908E7 /* UserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClient.swift; sourceTree = "<group>"; };
 		6A73624B2767A1BB00486A86 /* LoginCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCore.swift; sourceTree = "<group>"; };
 		6AA3843F27628C6B003A7826 /* InstagramTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstagramTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AA3844227628C6B003A7826 /* InstagramTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramTVApp.swift; sourceTree = "<group>"; };
@@ -103,6 +107,22 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		6A5A8F6A27806D8D004908E7 /* AuthenticationClient */ = {
+			isa = PBXGroup;
+			children = (
+				6A5A8F6D27806DA8004908E7 /* AuthenticationClient.swift */,
+			);
+			path = AuthenticationClient;
+			sourceTree = "<group>";
+		};
+		6A5A8F6F27806E01004908E7 /* UserClient */ = {
+			isa = PBXGroup;
+			children = (
+				6A5A8F7027806E0C004908E7 /* UserClient.swift */,
+			);
+			path = UserClient;
+			sourceTree = "<group>";
+		};
 		6A73624A2767A1AA00486A86 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +157,8 @@
 			isa = PBXGroup;
 			children = (
 				6AB9A819277C9D5300986925 /* AppCore */,
+				6A5A8F6F27806E01004908E7 /* UserClient */,
+				6A5A8F6A27806D8D004908E7 /* AuthenticationClient */,
 				6A73624A2767A1AA00486A86 /* Login */,
 				6AB9A81E277CB2A000986925 /* LoggedIn */,
 				6AA3844227628C6B003A7826 /* InstagramTVApp.swift */,
@@ -351,6 +373,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A5A8F6E27806DA8004908E7 /* AuthenticationClient.swift in Sources */,
+				6A5A8F7127806E0C004908E7 /* UserClient.swift in Sources */,
 				6A412FF5277DA0E6008FEEFB /* ProfileView.swift in Sources */,
 				6AB9A812277C8CE300986925 /* Swiftagram++.swift in Sources */,
 				6A73624C2767A1BB00486A86 /* LoginCore.swift in Sources */,
