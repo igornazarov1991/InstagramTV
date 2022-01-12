@@ -15,7 +15,10 @@ struct ProfileView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             VStack {
-                Text("Logged in as")
+                if let thumbnail = viewStore.currentUser?.avatar {
+                    AsyncImage(url: thumbnail)
+                        .clipShape(Circle())
+                }
                 if let username = viewStore.currentUser?.username {
                     Text(username)
                 }
