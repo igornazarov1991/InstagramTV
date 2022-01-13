@@ -11,24 +11,28 @@ import ComposableArchitecture
 import Swiftagram
 
 enum AppState: Equatable {
+    case fetchSecret(FetchSecretState)
     case login(LoginState)
     case loggedIn(LoggedInState)
 
-    init() { self = .login(.init()) }
+    init() { self = .fetchSecret(.init()) }
 }
 
 enum AppAction: Equatable {
+    case fetchSecret(FetchSecretAction)
     case login(LoginAction)
     case loggedIn(LoggedInAction)
 }
 
 struct AppEnvironment {
     var mainQueue: AnySchedulerOf<DispatchQueue>
+    var fetchSecretClient: FetchSecretClient
     var authenticationClient: AuthenticationClient
     var userClient: UserClient
 
     static let live = Self(
         mainQueue: .main,
+        fetchSecretClient: .live,
         authenticationClient: .live,
         userClient: .live
     )
@@ -38,6 +42,7 @@ struct AppEnvironment {
 extension AppEnvironment {
     static let test = Self(
         mainQueue: .immediate,
+        fetchSecretClient: .test,
         authenticationClient: .test,
         userClient: .test
     )
@@ -45,6 +50,17 @@ extension AppEnvironment {
 #endif
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
+    fetchSecretReducer.pullback(
+        state: /AppState.fetchSecret,
+        action: /AppAction.fetchSecret,
+        environment: {
+            FetchSecretEnvironment(
+                mainQueue: $0.mainQueue,
+                fetchSecretClient: $0.fetchSecretClient
+            )
+        }
+    ),
+
     loginReducer.pullback(
         state: /AppState.login,
         action: /AppAction.login,
@@ -69,8 +85,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
 
     Reducer { state, action, _ in
         switch action {
-        case .login(.fetchSecretResponse(.success(let secret))):
+        case .fetchSecret(.fetchSecretResponse(.success(let secret))):
             state = .loggedIn(.init(secret: secret))
+            return .none
+
+        case .fetchSecret:
             return .none
 
         case .login(.loginResponse(.success(let secret))):

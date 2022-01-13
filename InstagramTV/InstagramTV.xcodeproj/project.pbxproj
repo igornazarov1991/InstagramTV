@@ -27,6 +27,9 @@
 		6AB9A81B277C9D5D00986925 /* AppCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB9A81A277C9D5D00986925 /* AppCore.swift */; };
 		6AB9A81D277CB26400986925 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB9A81C277CB26400986925 /* AppView.swift */; };
 		6AB9A822277CB71C00986925 /* LoggedInCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB9A821277CB71C00986925 /* LoggedInCore.swift */; };
+		6AE86FC02790842700D511F3 /* FetchSecretCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE86FBF2790842700D511F3 /* FetchSecretCore.swift */; };
+		6AE86FC32790858A00D511F3 /* FetchSecretClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE86FC22790858A00D511F3 /* FetchSecretClient.swift */; };
+		6AE86FC5279086D100D511F3 /* FetchSecretView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE86FC4279086D100D511F3 /* FetchSecretView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +71,9 @@
 		6AB9A81C277CB26400986925 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		6AB9A821277CB71C00986925 /* LoggedInCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedInCore.swift; sourceTree = "<group>"; };
 		6AB9A823277D1D3600986925 /* Swiftagram */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Swiftagram; path = ../../forks/Swiftagram; sourceTree = "<group>"; };
+		6AE86FBF2790842700D511F3 /* FetchSecretCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSecretCore.swift; sourceTree = "<group>"; };
+		6AE86FC22790858A00D511F3 /* FetchSecretClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSecretClient.swift; sourceTree = "<group>"; };
+		6AE86FC4279086D100D511F3 /* FetchSecretView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSecretView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +165,8 @@
 				6AB9A819277C9D5300986925 /* AppCore */,
 				6A5A8F6F27806E01004908E7 /* UserClient */,
 				6A5A8F6A27806D8D004908E7 /* AuthenticationClient */,
+				6AE86FC12790858000D511F3 /* FetchSecretClient */,
+				6AE86FBE2790841000D511F3 /* FetchSecret */,
 				6A73624A2767A1AA00486A86 /* Login */,
 				6AB9A81E277CB2A000986925 /* LoggedIn */,
 				6AA3844227628C6B003A7826 /* InstagramTVApp.swift */,
@@ -211,6 +219,23 @@
 				6A412FF3277DA0E6008FEEFB /* Profile */,
 			);
 			path = LoggedIn;
+			sourceTree = "<group>";
+		};
+		6AE86FBE2790841000D511F3 /* FetchSecret */ = {
+			isa = PBXGroup;
+			children = (
+				6AE86FBF2790842700D511F3 /* FetchSecretCore.swift */,
+				6AE86FC4279086D100D511F3 /* FetchSecretView.swift */,
+			);
+			path = FetchSecret;
+			sourceTree = "<group>";
+		};
+		6AE86FC12790858000D511F3 /* FetchSecretClient */ = {
+			isa = PBXGroup;
+			children = (
+				6AE86FC22790858A00D511F3 /* FetchSecretClient.swift */,
+			);
+			path = FetchSecretClient;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -373,7 +398,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AE86FC32790858A00D511F3 /* FetchSecretClient.swift in Sources */,
 				6A5A8F6E27806DA8004908E7 /* AuthenticationClient.swift in Sources */,
+				6AE86FC5279086D100D511F3 /* FetchSecretView.swift in Sources */,
 				6A5A8F7127806E0C004908E7 /* UserClient.swift in Sources */,
 				6A412FF5277DA0E6008FEEFB /* ProfileView.swift in Sources */,
 				6AB9A812277C8CE300986925 /* Swiftagram++.swift in Sources */,
@@ -382,6 +409,7 @@
 				6AB9A81D277CB26400986925 /* AppView.swift in Sources */,
 				6AB9A81B277C9D5D00986925 /* AppCore.swift in Sources */,
 				6A412FF9277DA9C4008FEEFB /* ProfileCore.swift in Sources */,
+				6AE86FC02790842700D511F3 /* FetchSecretCore.swift in Sources */,
 				6AA3844327628C6B003A7826 /* InstagramTVApp.swift in Sources */,
 				6A412FF7277DA0F6008FEEFB /* LoggedInView.swift in Sources */,
 				6AB9A822277CB71C00986925 /* LoggedInCore.swift in Sources */,

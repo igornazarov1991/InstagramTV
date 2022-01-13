@@ -20,8 +20,6 @@ struct LoginState: Equatable {
 }
 
 enum LoginAction: Equatable {
-    case fetchSecret
-    case fetchSecretResponse(Result<Secret, AuthenticationClient.Error>)
     case loginButtonTapped
     case loginResponse(Result<Secret, AuthenticationClient.Error>)
     case sendTwoFactor(code: String)
@@ -44,17 +42,6 @@ let loginReducer = Reducer<
     LoginEnvironment
 > { state, action, environment in
     switch action {
-    case .fetchSecret:
-        return environment.authenticationClient.fetchSecret()
-            .receive(on: environment.mainQueue)
-            .catchToEffect(LoginAction.fetchSecretResponse)
-
-    case .fetchSecretResponse(.success(let secret)):
-        return .none
-
-    case .fetchSecretResponse(.failure(let error)):
-        return .none
-
     case .loginButtonTapped:
         return environment.authenticationClient.authenticate(
             state.username,

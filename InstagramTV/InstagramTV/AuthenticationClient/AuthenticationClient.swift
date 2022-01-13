@@ -11,14 +11,12 @@ import Swiftagram
 
 struct AuthenticationClient {
     var authenticate: (String, String) -> Effect<Secret, Error>
-    var fetchSecret: () -> Effect<Secret, Error>
     var sendTwoFactor: (TwoFactor?, String) -> Effect<Secret, Error>
 
     static private var bin: Set<AnyCancellable> = []
 
     enum Error: Swift.Error, Equatable {
         case generic
-        case emptyToken
         case twoFactorChallenge(TwoFactor)
         case twoFactorFailed
     }
@@ -62,16 +60,6 @@ extension AuthenticationClient {
             }
         },
 
-        fetchSecret: {
-            Effect<Secret, Error>.future { callback in
-                if let secret = try? Authenticator.keychain.secrets.get().first {
-                    callback(.success(secret))
-                } else {
-                    callback(.failure(.emptyToken))
-                }
-            }
-        },
-
         sendTwoFactor: { challenge, code in
             Effect<Secret, Error>.future { callback in
                 challenge?
@@ -95,13 +83,11 @@ extension AuthenticationClient {
 extension AuthenticationClient {
     static let test = Self(
         authenticate: { _, _ in .none },
-        fetchSecret: { .none },
         sendTwoFactor: { _, _ in .none }
     )
 
     static let emptySecret = Self(
         authenticate: { _, _ in .none },
-        fetchSecret: { Effect<Secret, Error>(error: .emptyToken) },
         sendTwoFactor: { _, _ in .none }
     )
 }

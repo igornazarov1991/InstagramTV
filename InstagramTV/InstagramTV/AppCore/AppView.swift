@@ -15,6 +15,12 @@ struct AppView: View {
         WithViewStore(store) { viewStore in
             SwitchStore(store) {
                 CaseLet(
+                    state: /AppState.fetchSecret,
+                    action: AppAction.fetchSecret
+                ) { store in
+                    FetchSecretView(store: store)
+                }
+                CaseLet(
                     state: /AppState.login,
                     action: AppAction.login
                 ) { store in
@@ -28,7 +34,7 @@ struct AppView: View {
                 }
             }
             .onAppear {
-                viewStore.send(.login(.fetchSecret))
+                viewStore.send(.fetchSecret(.fetchSecret))
             }
         }
     }

@@ -20,16 +20,17 @@ class InstagramTVTests: XCTestCase {
             reducer: appReducer,
             environment: AppEnvironment(
                 mainQueue: scheduler.eraseToAnyScheduler(),
-                authenticationClient: .emptySecret,
+                fetchSecretClient: .emptySecret,
+                authenticationClient: .test,
                 userClient: .test
             )
         )
 
-        store.send(.login(.fetchSecret))
+        store.send(.fetchSecret(.fetchSecret))
 
         scheduler.advance()
-        store.receive(.login(.fetchSecretResponse(.failure(.emptyToken)))) {
-            $0 = .login(LoginState())
+        store.receive(.fetchSecret(.fetchSecretResponse(.failure(.emptyToken)))) {
+            $0 = .fetchSecret(FetchSecretState())
         }
     }
 
