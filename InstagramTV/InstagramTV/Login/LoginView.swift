@@ -37,9 +37,9 @@ struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView(
             store: Store(
-                initialState: LoginState(),
-                reducer: loginReducer,
-                environment: .live
+                initialState: .init(),
+                reducer: .empty,
+                environment: ()
             )
         )
     }
