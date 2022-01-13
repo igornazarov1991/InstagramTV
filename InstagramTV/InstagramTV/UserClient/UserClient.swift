@@ -45,3 +45,11 @@ extension UserClient {
         }
     )
 }
+
+#if DEBUG
+extension UserClient {
+    static let test = Self(
+        fetchCurrentUser: { _ in .none }
+    )
+}
+#endif

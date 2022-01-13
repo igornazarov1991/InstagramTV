@@ -90,3 +90,19 @@ extension AuthenticationClient {
         }
     )
 }
+
+#if DEBUG
+extension AuthenticationClient {
+    static let test = Self(
+        authenticate: { _, _ in .none },
+        fetchSecret: { .none },
+        sendTwoFactor: { _, _ in .none }
+    )
+
+    static let emptySecret = Self(
+        authenticate: { _, _ in .none },
+        fetchSecret: { Effect<Secret, Error>(error: .emptyToken) },
+        sendTwoFactor: { _, _ in .none }
+    )
+}
+#endif

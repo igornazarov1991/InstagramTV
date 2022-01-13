@@ -34,6 +34,16 @@ struct AppEnvironment {
     )
 }
 
+#if DEBUG
+extension AppEnvironment {
+    static let test = Self(
+        mainQueue: .immediate,
+        authenticationClient: .test,
+        userClient: .test
+    )
+}
+#endif
+
 let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
     loginReducer.pullback(
         state: /AppState.login,
