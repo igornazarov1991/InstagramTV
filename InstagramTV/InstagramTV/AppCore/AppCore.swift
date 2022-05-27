@@ -89,6 +89,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
             state = .loggedIn(.init(secret: secret))
             return .none
 
+        case .fetchSecret(.fetchSecretResponse(.failure(let error))):
+            state = .login(.init())
+            return .none
+
         case .fetchSecret:
             return .none
 
